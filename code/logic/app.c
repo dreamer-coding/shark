@@ -12,64 +12,196 @@
  * -----------------------------------------------------------------------------
  */
 #include "fossil/code/app.h"
-#include "fossil/code/lifecycle.h"
 
-
-void custom_app_on_create(fossil_app_engine_t* app) {
-    fossil_io_printf("App Created\n");
-    app->state = FOSSIL_APP_LIFECYCLE_STATE_CREATED;
+int cmd_open(const char *filename, const char *mode) {
+    fossil_fstream_t stream;
+    if (fossil_fstream_open(&stream, filename, mode) == 0) {
+        printf("File opened: %s\n", stream.filename);
+        fossil_fstream_close(&stream);
+        return FOSSIL_IO_SUCCESS;
+    }
+    fprintf(stderr, "Failed to open file: %s\n", filename);
+    return FOSSIL_IO_FAILURE;
 }
 
-void custom_app_on_start(fossil_app_engine_t* app) {
-    fossil_io_printf("App Started\n");
-    app->state = FOSSIL_APP_LIFECYCLE_STATE_STARTED;
+int cmd_copy(const char *src, const char *dst) {
+    fossil_fstream_t src_stream, dst_stream;
+    if (fossil_fstream_open(&src_stream, src, "rb") != 0) {
+        fprintf(stderr, "Failed to open source file: %s\n", src);
+        return FOSSIL_IO_FAILURE;
+    }
+    if (fossil_fstream_open(&dst_stream, dst, "wb") != 0) {
+        fprintf(stderr, "Failed to open destination file: %s\n", dst);
+        fossil_fstream_close(&src_stream);
+        return FOSSIL_IO_FAILURE;
+    }
+
+    char buffer[1024];
+    size_t n;
+    while ((n = fossil_fstream_read(&src_stream, buffer, 1, sizeof(buffer))) > 0) {
+        fossil_fstream_write(&dst_stream, buffer, 1, n);
+    }
+
+    fossil_fstream_close(&src_stream);
+    fossil_fstream_close(&dst_stream);
+    printf("Copied %s to %s\n", src, dst);
+    return FOSSIL_IO_SUCCESS;
 }
 
-void custom_app_on_resume(fossil_app_engine_t* app) {
-    fossil_io_printf("App Resumed\n");
-    app->state = FOSSIL_APP_LIFECYCLE_STATE_RESUMED;
+int cmd_append(const char *filename, const char *data) {
+    fossil_fstream_t stream;
+    if (fossil_fstream_open(&stream, filename, "a") != 0) {
+        fprintf(stderr, "Could not open file for appending.\n");
+        return FOSSIL_IO_FAILURE;
+    }
+    if (fossil_fstream_append(&stream, data, 1, strlen(data)) == 0) {
+        printf("Appended data to %s\n", filename);
+        fossil_fstream_close(&stream);
+        return FOSSIL_IO_SUCCESS;
+    }
+    fprintf(stderr, "Append failed.\n");
+    fossil_fstream_close(&stream);
+    return FOSSIL_IO_FAILURE;
 }
 
-void custom_app_on_pause(fossil_app_engine_t* app) {
-    fossil_io_printf("App Paused\n");
-    app->state = FOSSIL_APP_LIFECYCLE_STATE_PAUSED;
+
+int cmd_info(const char *filename) {
+    if (!fossil_fstream_file_exists(filename)) {
+        printf("File does not exist.\n");
+        return FOSSIL_IO_FAILURE;
+    }
+
+    printf("File: %s\n", filename);
+    printf("Readable: %s\n", fossil_fstream_is_readable(filename) ? "yes" : "no");
+    printf("Writable: %s\n", fossil_fstream_is_writable(filename) ? "yes" : "no");
+    printf("Executable: %s\n", fossil_fstream_is_executable(filename) ? "yes" : "no");
+
+    fossil_fstream_t stream;
+    if (fossil_fstream_open(&stream, filename, "rb") == 0) {
+        int32_t size = fossil_fstream_get_size(&stream);
+        printf("Size: %d bytes\n", size);
+        fossil_fstream_close(&stream);
+    } else {
+        printf("Could not determine file size.\n");
+    }
+
+    return FOSSIL_IO_SUCCESS;
 }
 
-void custom_app_on_timeout(fossil_app_engine_t* app) {
-    fossil_io_printf("App Timed Out\n");
-    app->state = FOSSIL_APP_LIFECYCLE_STATE_TIMEOUT;
+int cmd_remove(const char *filename) {
+    if (fossil_fstream_remove(filename) == 0) {
+        printf("Removed file: %s\n", filename);
+        return FOSSIL_IO_SUCCESS;
+    }
+    fprintf(stderr, "Failed to remove file: %s\n", filename);
+    return FOSSIL_IO_FAILURE;
 }
 
-void custom_app_on_stop(fossil_app_engine_t* app) {
-    fossil_io_printf("App Stopped\n");
-    app->state = FOSSIL_APP_LIFECYCLE_STATE_STOPPED;
+int cmd_backup(const char *filename, const char *suffix) {
+    if (fossil_fstream_backup(filename, suffix) == 0) {
+        printf("Backup created: %s\n", filename);
+        return FOSSIL_IO_SUCCESS;
+    }
+    fprintf(stderr, "Failed to create backup for: %s\n", filename);
+    return FOSSIL_IO_FAILURE;
 }
 
-void custom_app_on_destroy(fossil_app_engine_t* app) {
-    fossil_io_printf("App Destroyed\n");
-    app->state = FOSSIL_APP_LIFECYCLE_STATE_DESTROYED;
+int cmd_read(const char *filename) {
+    fossil_fstream_t stream;
+    if (fossil_fstream_open(&stream, filename, "r") != 0) {
+        fprintf(stderr, "Could not open file: %s\n", filename);
+        return FOSSIL_IO_FAILURE;
+    }
+
+    char buffer[1024];
+    size_t n;
+    while ((n = fossil_fstream_read(&stream, buffer, 1, sizeof(buffer) - 1)) > 0) {
+        buffer[n] = '\0';
+        printf("%s", buffer);
+    }
+
+    fossil_fstream_close(&stream);
+    printf("\n");
+    return FOSSIL_IO_SUCCESS;
+}
+
+int cmd_write(const char *filename, const char *data) {
+    fossil_fstream_t stream;
+    if (fossil_fstream_open(&stream, filename, "w") != 0) {
+        fprintf(stderr, "Could not open file for writing: %s\n", filename);
+        return FOSSIL_IO_FAILURE;
+    }
+    if (fossil_fstream_write(&stream, data, 1, strlen(data)) != 0) {
+        printf("Wrote data to %s\n", filename);
+        fossil_fstream_close(&stream);
+        return FOSSIL_IO_SUCCESS;
+    }
+    fprintf(stderr, "Write failed.\n");
+    fossil_fstream_close(&stream);
+    return FOSSIL_IO_FAILURE;
+}
+
+int cmd_rename(const char *oldname, const char *newname) {
+    if (fossil_fstream_rename(oldname, newname) == 0) {
+        printf("Renamed %s to %s\n", oldname, newname);
+        return FOSSIL_IO_SUCCESS;
+    }
+    fprintf(stderr, "Failed to rename file.\n");
+    return FOSSIL_IO_FAILURE;
 }
 
 bool app_entry(int argc, char** argv) {
-    unused(argc);
-    unused(argv);
+    fossil_io_printf("[shark] Entry\n");
 
-    fossil_io_printf("Launching Custom App...\n");
+    if (argc < 2) {
+        fprintf(stderr, "Usage: fossil_file <command> [...]\n");
+        return FOSSIL_IO_FAILURE;
+    }
 
-    fossil_app_engine_t app;
-    fossil_app_init(&app);
+    const char *cmd = argv[1];
 
-    app.on_create  = custom_app_on_create;
-    app.on_start   = custom_app_on_start;
-    app.on_resume  = custom_app_on_resume;
-    app.on_pause   = custom_app_on_pause;
-    app.on_timeout = custom_app_on_timeout;
-    app.on_stop    = custom_app_on_stop;
-    app.on_destroy = custom_app_on_destroy;
+    if (strcmp(cmd, "--help") == 0 || strcmp(cmd, "-h") == 0) {
+        printf("Shark — Available Commands:\n");
+        printf("  --help, -h                Show this help message\n");
+        printf("  --version, -v             Show version information\n");
+        printf("  open <file> <mode>        Open a file with specified mode\n");
+        printf("  copy <src> <dst>          Copy file from src to dst\n");
+        printf("  append <file> <data>      Append string data to a file\n");
+        printf("  info <file>               Show info about a file\n");
+        printf("  remove <file>             Delete a file\n");
+        printf("  backup <file> <suffix>    Backup a file with suffix\n");
+        printf("  read <file>               Read a file and print its contents\n");
+        printf("  write <file> <data>       Write data to a file\n");
+        printf("  rename <oldname> <newname> Rename a file\n");
 
-    // Optional: custom transition handler (if you want custom rules)
-    // app.transition = your_custom_transition_handler;
+        return FOSSIL_IO_SUCCESS;
+    }
 
-    fossil_app_run(&app);
-    return 0;
+    if (strcmp(cmd, "--version") == 0 || strcmp(cmd, "-v") == 0) {
+        printf("Fossil File CLI version %s\n", FOSSIL_APP_VERSION);
+        return FOSSIL_IO_SUCCESS;
+    }
+
+    if (strcmp(cmd, "open") == 0 && argc == 4) {
+        return cmd_open(argv[2], argv[3]);
+    } else if (strcmp(cmd, "copy") == 0 && argc == 4) {
+        return cmd_copy(argv[2], argv[3]);
+    } else if (strcmp(cmd, "append") == 0 && argc == 4) {
+        return cmd_append(argv[2], argv[3]);
+    } else if (strcmp(cmd, "info") == 0 && argc == 3) {
+        return cmd_info(argv[2]);
+    } else if (strcmp(cmd, "remove") == 0 && argc == 3) {
+        return cmd_remove(argv[2]);
+    } else if (strcmp(cmd, "backup") == 0 && argc == 4) {
+        return cmd_backup(argv[2], argv[3]);
+    }     else if (strcmp(cmd, "read") == 0 && argc == 3) {
+        return cmd_read(argv[2]);
+    } else if (strcmp(cmd, "write") == 0 && argc == 4) {
+        return cmd_write(argv[2], argv[3]);
+    } else if (strcmp(cmd, "rename") == 0 && argc == 4) {
+        return cmd_rename(argv[2], argv[3]);
+    }
+
+    fprintf(stderr, "Unknown or malformed command. Use --help for usage.\n");
+    return FOSSIL_IO_FAILURE;
 }
