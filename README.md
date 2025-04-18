@@ -4,12 +4,6 @@
 
 ## 🦈 **shark** CLI Command Reference
 
-Here's a starting point for `shark`, a command-line tool that wraps around the `fossil_fstream_` API for file operations. Each subcommand maps cleanly to a `fossil_fstream_` function:
-
----
-
-### 🦈 `shark` – File Stream Command-Line Tool
-
 | Command                          | Description                                 |
 |----------------------------------|---------------------------------------------|
 | `--help`, `-h`                   | Show this help message                      |
