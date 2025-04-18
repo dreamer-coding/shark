@@ -112,6 +112,7 @@ int cmd_rename(const char *oldname, const char *newname);
  */
 bool app_entry(int argc, char** argv);
 
+
 #ifdef __cplusplus
 }
 #endif
