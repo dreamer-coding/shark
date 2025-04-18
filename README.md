@@ -26,23 +26,6 @@ Here's a starting point for `shark`, a command-line tool that wraps around the `
 
 ---
 
-### 📝 Notes
-- The tool maintains a current open stream context (likely via a temporary file or memory).
-- For scripting, `shark` can be used in pipelines:  
-  ```sh
-  shark open data.txt r
-  shark read 1 100
-  shark close
-  ```
-
-### Notes:
-- **--dry-run**: Simulate the command without actually performing any actions. Useful for previewing.
-- **--recursive**: Apply the operation to directories and subdirectories.
-- **--backup**: Create backup files before making changes (e.g., when deleting or overwriting).
-- **--human-readable**: Show sizes in a human-readable format (e.g., MB, GB).
-- **--ignore-case**: Make searches case-insensitive.
-- **--editor/--viewer**: Specify custom editors or viewers for file operations.
-
 ## **Prerequisites**
 
 Ensure you have the following installed before starting:
