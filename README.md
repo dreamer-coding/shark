@@ -2,9 +2,9 @@
     <img src=".github/logo.png" alt="Shark Tool Logo" width="620"/>
 </p>
 
-### A Command-Line Power Utility by **Fossil Logic**
+### A Command-Line Administration Power Utility by **Fossil Logic**
 
-Shark Tool is the ultimate **all-in-one file and system administration utility**. Built for admins, developers, and power users, Shark unifies essential file management, automation, and analysis tasks into a single, powerful command-line interface—eliminating the need for multiple separate tools. Its unique commands, such as `grammar` for advanced text analysis, `summary` for structured file summaries, and `introspect` for deep file inspection, set Shark apart by providing capabilities rarely found in traditional CLI utilities.
+Shark Tool is the ultimate **all-in-one system and administration utility**. Designed for system administrators, DevOps engineers, and power users, Shark unifies essential tasks—ranging from user and permission management, process monitoring, and system configuration, to file management, automation, and analysis—into a single, powerful command-line interface. Its unique commands, such as `grammar` for advanced text analysis, `summary` for structured file summaries, and `introspect` for deep file inspection, set Shark apart by providing administrative capabilities rarely found in traditional CLI utilities.
 
 ---
 
@@ -47,6 +47,9 @@ Shark Tool is the ultimate **all-in-one file and system administration utility**
 | `grammar` | Perform grammar analysis, correction, sanitization, tone detection, and content-risk scanning through the SOAP API. | `--check` Run grammar check<br>`--fix` Auto-correct grammar<br>`--sanitize` Remove rot-brain/meme language<br>`--suggest` Suggest alternatives<br>`--tone` Detect tone<br>`--detect <type>` Run detectors: ragebait, clickbait, spam, woke, bot, sarcasm, formal, snowflake, offensive, neutral, hype, quality, political, conspiracy, marketing, technobabble |
 | `summary` | Generate a structured summary of one or more files (text, logs, code, docs). | `-l, --lines <n>` Limit lines analyzed<br>`--auto` Auto-detect file type<br>`--keywords` Extract keywords<br>`--topics` Topic clustering<br>`--stats` File statistics (chars/lines/entropy)<br>`--fson` Output structured FSON summary |
 | `storage` | Deduplicate, catalog, snapshot, organize, and prune files. | `--dedupe` Duplicates<br>`--catalog` Catalog<br>`--index` Index<br>`--snapshot` Snapshot<br>`--prune` Prune |
+| `manage` | Manage users, groups, permissions, and roles. | `--add-user <name>` Add user<br>`--del-user <name>` Delete user<br>`--add-group <name>` Add group<br>`--del-group <name>` Delete group<br>`--chmod <perm>` Set permissions<br>`--chown <user:group>` Change ownership |
+| `system` | Inspect and modify system configuration. | `--info` System info<br>`--uptime` Show uptime<br>`--disk` Disk usage<br>`--memory` Memory usage<br>`--network` Network stats<br>`--shutdown` Shutdown system<br>`--reboot` Reboot system |
+| `process` | Manage and inspect running processes. | `--list` List all processes<br>`--kill <pid>` Terminate process<br>`--priority <pid> <level>` Set process priority<br>`--tree` Show process tree<br>`--watch <pid>` Monitor process in real-time |
 
 ---
 
