@@ -42,21 +42,24 @@ int fossil_shark_help(ccstring command, bool show_examples, bool full_manual) {
         fossil_io_printf("  {cyan,bold}archive{normal}   - Create, extract, or list archives\n");
         fossil_io_printf("  {cyan,bold}view{normal}      - Output file contents to terminal\n");
         fossil_io_printf("  {cyan,bold}compare{normal}   - Compare files or directories\n");
+        fossil_io_printf("  {cyan,bold}help{normal}      - Show help and usage\n");
+        fossil_io_printf("  {cyan,bold}summary{normal}   - Generate structured summary\n");
         fossil_io_printf("  {cyan,bold}sync{normal}      - Synchronize files/directories\n");
         fossil_io_printf("  {cyan,bold}watch{normal}     - Monitor files/directories\n");
         fossil_io_printf("  {cyan,bold}rewrite{normal}   - Modify or update file contents\n");
         fossil_io_printf("  {cyan,bold}introspect{normal}- Examine file contents, type, or metadata\n");
-        fossil_io_printf("  {cyan,bold}help{normal}      - Show help and usage\n");
         fossil_io_printf("  {cyan,bold}grammar{normal}   - Grammar analysis and correction\n");
-        fossil_io_printf("  {cyan,bold}summary{normal}   - Generate structured summary\n");
         fossil_io_printf("  {cyan,bold}storage{normal}   - Deduplicate, catalog, snapshot, organize, prune files\n");
+        fossil_io_printf("  {cyan,bold}manage{normal}    - Manage user and group permissions\n");
         fossil_io_printf("\n{blue,bold,underline}Global Flags:{normal}\n");
         fossil_io_printf("  {cyan,bold}--help{normal}    - Show command help\n");
         fossil_io_printf("  {cyan,bold}--version{normal} - Display Shark Tool version\n");
+        fossil_io_printf("  {cyan,bold}--name{normal}    - Show application name\n");
         fossil_io_printf("  {cyan,bold}-v, --verbose{normal} - Enable detailed output\n");
         fossil_io_printf("  {cyan,bold}-q, --quiet{normal}   - Suppress standard output\n");
         fossil_io_printf("  {cyan,bold}--dry-run{normal}     - Simulate actions without changes\n");
         fossil_io_printf("  {cyan,bold}--color{normal}       - Colorize output where applicable\n");
+        fossil_io_printf("  {cyan,bold}--clear{normal}       - Clear the terminal screen\n");
         fossil_io_printf("  {cyan,bold}--time{normal}        - Display timestamps in output\n");
         fossil_io_printf("{cyan,italic}------------------------------------------------------------{normal}\n");
         return 0;
@@ -134,6 +137,20 @@ int fossil_shark_help(ccstring command, bool show_examples, bool full_manual) {
             fossil_io_printf("  {cyan,bold}-b, --binary{normal}     Binary diff\n");
             fossil_io_printf("  {cyan,bold}--context <n>{normal}    Show context lines\n");
             fossil_io_printf("  {cyan,bold}--ignore-case{normal}    Ignore case differences\n");
+        } else if (fossil_io_cstring_equals(command, "help")) {
+            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}help [command]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
+            fossil_io_printf("  {cyan,bold}--examples{normal}  Show usage examples\n");
+            fossil_io_printf("  {cyan,bold}--man{normal}       Show full manual\n");
+        } else if (fossil_io_cstring_equals(command, "summary")) {
+            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}summary [options] <file>{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
+            fossil_io_printf("  {cyan,bold}-l, --lines <n>{normal}      Limit lines analyzed\n");
+            fossil_io_printf("  {cyan,bold}--auto{normal}               Auto-detect file type\n");
+            fossil_io_printf("  {cyan,bold}--keywords{normal}           Extract keywords\n");
+            fossil_io_printf("  {cyan,bold}--topics{normal}             Topic clustering\n");
+            fossil_io_printf("  {cyan,bold}--stats{normal}              File statistics (chars/lines/entropy)\n");
+            fossil_io_printf("  {cyan,bold}--fson{normal}               Output structured FSON summary\n");
         } else if (fossil_io_cstring_equals(command, "sync")) {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}sync [options] <src> <dest>{normal}\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
@@ -149,22 +166,19 @@ int fossil_shark_help(ccstring command, bool show_examples, bool full_manual) {
         } else if (fossil_io_cstring_equals(command, "rewrite")) {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}rewrite [options] <path> [content]{normal}\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
-            fossil_io_printf("  {cyan,bold}-i{normal}                In-place edit\n");
-            fossil_io_printf("  {cyan,bold}--append{normal}          Append instead of overwrite\n");
-            fossil_io_printf("  {cyan,bold}-n{normal}                No newline\n");
-            fossil_io_printf("  {cyan,bold}--size <n>{normal}        Set exact file size\n");
+            fossil_io_printf("  {cyan,bold}-a, --append{normal}         Append instead of overwrite\n");
+            fossil_io_printf("  {cyan,bold}--in-place{normal}           In-place edit (default)\n");
+            fossil_io_printf("  {cyan,bold}--access-time{normal}        Update access time\n");
+            fossil_io_printf("  {cyan,bold}--mod-time{normal}           Update modification time\n");
+            fossil_io_printf("  {cyan,bold}--size <n>{normal}           Set exact file size\n");
         } else if (fossil_io_cstring_equals(command, "introspect")) {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}introspect [options] <path>{normal}\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
-            fossil_io_printf("  {cyan,bold}-n <lines>{normal}        Number of lines\n");
-            fossil_io_printf("  {cyan,bold}-c{normal}                Count lines, words, bytes\n");
-            fossil_io_printf("  {cyan,bold}--fson{normal}            FSON output\n");
-            fossil_io_printf("  {cyan,bold}--mime{normal}            Show MIME type\n");
-        } else if (fossil_io_cstring_equals(command, "help")) {
-            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}help [command]{normal}\n");
-            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
-            fossil_io_printf("  {cyan,bold}--examples{normal}  Show usage examples\n");
-            fossil_io_printf("  {cyan,bold}--man{normal}       Show full manual\n");
+            fossil_io_printf("  {cyan,bold}--head <n>{normal}           Show first n lines\n");
+            fossil_io_printf("  {cyan,bold}--tail <n>{normal}           Show last n lines\n");
+            fossil_io_printf("  {cyan,bold}--count{normal}              Count lines, words, bytes\n");
+            fossil_io_printf("  {cyan,bold}--type{normal}               Show file type\n");
+            fossil_io_printf("  {cyan,bold}--fson{normal}               FSON output\n");
         } else if (fossil_io_cstring_equals(command, "grammar")) {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}grammar [options] <file>{normal}\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
@@ -174,15 +188,6 @@ int fossil_shark_help(ccstring command, bool show_examples, bool full_manual) {
             fossil_io_printf("  {cyan,bold}--suggest{normal}         Suggest alternatives\n");
             fossil_io_printf("  {cyan,bold}--tone{normal}            Detect tone\n");
             fossil_io_printf("  {cyan,bold}--detect <type>{normal}   Run detectors: ragebait, clickbait, spam, woke, bot, sarcasm, formal, snowflake, offensive, neutral, hype, quality, political, conspiracy, marketing, technobabble\n");
-        } else if (fossil_io_cstring_equals(command, "summary")) {
-            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}summary [options] <file>{normal}\n");
-            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
-            fossil_io_printf("  {cyan,bold}-l, --lines <n>{normal}      Limit lines analyzed\n");
-            fossil_io_printf("  {cyan,bold}--auto{normal}               Auto-detect file type\n");
-            fossil_io_printf("  {cyan,bold}--keywords{normal}           Extract keywords\n");
-            fossil_io_printf("  {cyan,bold}--topics{normal}             Topic clustering\n");
-            fossil_io_printf("  {cyan,bold}--stats{normal}              File statistics (chars/lines/entropy)\n");
-            fossil_io_printf("  {cyan,bold}--fson{normal}               Output structured FSON summary\n");
         } else if (fossil_io_cstring_equals(command, "storage")) {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}storage [options] <path>{normal}\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
@@ -191,6 +196,15 @@ int fossil_shark_help(ccstring command, bool show_examples, bool full_manual) {
             fossil_io_printf("  {cyan,bold}--index{normal}              Index\n");
             fossil_io_printf("  {cyan,bold}--snapshot{normal}           Snapshot\n");
             fossil_io_printf("  {cyan,bold}--prune{normal}              Prune\n");
+        } else if (fossil_io_cstring_equals(command, "manage")) {
+            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}manage [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
+            fossil_io_printf("  {cyan,bold}--user <name>{normal}        Specify user\n");
+            fossil_io_printf("  {cyan,bold}--group <name>{normal}       Specify group\n");
+            fossil_io_printf("  {cyan,bold}--add <perm>{normal}         Add permission\n");
+            fossil_io_printf("  {cyan,bold}--remove <perm>{normal}      Remove permission\n");
+            fossil_io_printf("  {cyan,bold}--list{normal}               List permissions\n");
+            fossil_io_printf("  {cyan,bold}--set <perm>{normal}         Set permissions\n");
         } else {
             fossil_io_fprintf(FOSSIL_STDERR, "{red,bold,blink}Unknown command: %s{normal}\n", command);
             return 1;
@@ -218,6 +232,10 @@ int fossil_shark_help(ccstring command, bool show_examples, bool full_manual) {
                 fossil_io_printf("  {cyan,bold}shark view -n -h 20 --time notes.txt{normal}\n");
             else if (fossil_io_cstring_equals(command, "compare"))
                 fossil_io_printf("  {cyan,bold}shark compare -t main_v1.c main_v2.c --context 5{normal}\n");
+            else if (fossil_io_cstring_equals(command, "help"))
+                fossil_io_printf("  {cyan,bold}shark help move --examples{normal}\n");
+            else if (fossil_io_cstring_equals(command, "summary"))
+                fossil_io_printf("  {cyan,bold}shark summary --auto --keywords --stats article.md{normal}\n");
             else if (fossil_io_cstring_equals(command, "sync"))
                 fossil_io_printf("  {cyan,bold}shark sync -ru src/ dest/{normal}\n");
             else if (fossil_io_cstring_equals(command, "watch"))
@@ -225,13 +243,13 @@ int fossil_shark_help(ccstring command, bool show_examples, bool full_manual) {
             else if (fossil_io_cstring_equals(command, "rewrite"))
                 fossil_io_printf("  {cyan,bold}shark rewrite -i --append log.txt \"New entry\"{normal}\n");
             else if (fossil_io_cstring_equals(command, "introspect"))
-                fossil_io_printf("  {cyan,bold}shark introspect --mime report.pdf{normal}\n");
+                fossil_io_printf("  {cyan,bold}shark introspect --head 10 --type report.pdf{normal}\n");
             else if (fossil_io_cstring_equals(command, "grammar"))
                 fossil_io_printf("  {cyan,bold}shark grammar --check --tone notes.txt{normal}\n");
-            else if (fossil_io_cstring_equals(command, "summary"))
-                fossil_io_printf("  {cyan,bold}shark summary --auto --keywords --stats article.md{normal}\n");
             else if (fossil_io_cstring_equals(command, "storage"))
                 fossil_io_printf("  {cyan,bold}shark storage --dedupe --catalog ~/Documents/{normal}\n");
+            else if (fossil_io_cstring_equals(command, "manage"))
+                fossil_io_printf("  {cyan,bold}shark manage --user alice --add read{normal}\n");
         }
 
         // Manual page output omitted for brevity, but should be updated similarly.

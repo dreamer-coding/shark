@@ -274,6 +274,20 @@ int fossil_shark_summary(ccstring *paths, int count,
 int fossil_shark_storage(ccstring path, bool dedupe, bool catalog,
                          bool index, bool snapshot, bool prune);
 
+/**
+ * Manage user and group permissions.
+ * @param user Name of the user (NULL if not specified)
+ * @param group Name of the group (NULL if not specified)
+ * @param add_perm Permission to add (NULL if not specified)
+ * @param remove_perm Permission to remove (NULL if not specified)
+ * @param list List permissions if true
+ * @param set_perm Set permissions explicitly (NULL if not specified)
+ * @return 0 on success, non-zero on error
+ */
+int fossil_shark_manage(ccstring user, ccstring group,
+                      ccstring add_perm, ccstring remove_perm,
+                      bool list, ccstring set_perm);
+
 #ifdef __cplusplus
 }
 #endif
