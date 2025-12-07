@@ -29,28 +29,25 @@ Shark Tool is the ultimate **all-in-one system and administration utility**. Des
 
 | **Command** | **Description** | **Common Flags** |
 |-------------|-----------------|-----------------|
-| `archive` | Create, extract, or list archives. | `-c, --create` New archive<br>`-x, --extract` Extract contents<br>`-l, --list` List archive<br>`-f <format>` Format: zip/tar/gz<br>`-p, --password` Encrypt archive |
-| `compare` | Compare two files/directories (text or binary). | `-t, --text` Line diff<br>`-b, --binary` Binary diff<br>`--context <n>` Show context lines<br>`--ignore-case` Ignore case differences |
-| `copy` | Copy files or directories. | `-r, --recursive` Copy subdirectories<br>`-u, --update` Only copy newer<br>`-p, --preserve` Keep permissions/timestamps |
-| `create` | Create new directories or files. | `-p, --parents` Create parent dirs<br>`-t, --type` Create file or dir |
-| `grammar` | Perform grammar analysis, correction, sanitization, tone detection, and content-risk scanning through the SOAP API. | `--check` Run grammar check<br>`--fix` Auto-correct grammar<br>`--sanitize` Remove rot-brain/meme language<br>`--suggest` Suggest alternatives<br>`--tone` Detect tone<br>`--detect <type>` Run detectors: ragebait, clickbait, spam, woke, bot, sarcasm, formal, snowflake, offensive, neutral, hype, quality, political, conspiracy, marketing, technobabble |
-| `help` | Display help for supported commands. | `--examples` Show usage examples<br>`--man` Full manual |
-| `introspect` | Examine file contents, type, or metadata. | `-n <lines>` Number of lines<br>`-c` Count lines, words, bytes<br>`--fson` FSON output<br>`--mime` Show MIME type |
-| `manage` | Manage users, groups, permissions, and roles. | `--add-user <name>` Add user<br>`--del-user <name>` Delete user<br>`--add-group <name>` Add group<br>`--del-group <name>` Delete group<br>`--chmod <perm>` Set permissions<br>`--chown <user:group>` Change ownership |
+| `show` | Display files and directories. | `-a, --all` Show hidden files<br>`-l, --long` Detailed info<br>`-h, --human` Human-readable sizes<br>`-r, --recursive` Include subdirs<br>`-d, --depth <n>` Limit recursion depth<br>`--as` Format: **list**, **tree**, **graph**<br>`--time` Show timestamps |
 | `move` | Move or rename files/directories. | `-f, --force` Overwrite without prompt<br>`-i, --interactive` Ask before overwrite<br>`-b, --backup` Backup before move |
-| `play` | Play text-based classic games (dice, rock-paper-scissors, guess the number). | `--game <name>` Game to play: `dice`, `rps`, `guess`<br>`--rounds <n>` Number of rounds (default 1)<br>`--difficulty <level>` Difficulty for guess-the-number: `easy`, `medium`, `hard` |
-| `process` | Manage and inspect running processes. | `--list` List all processes<br>`--kill <pid>` Terminate process<br>`--priority <pid> <level>` Set process priority<br>`--tree` Show process tree<br>`--watch <pid>` Monitor process in real-time |
-| `rename` | Rename files or directories. | `-f, --force` Overwrite target<br>`-i, --interactive` Confirm before overwrite |
+| `copy` | Copy files or directories. | `-r, --recursive` Copy subdirectories<br>`-u, --update` Only copy newer<br>`-p, --preserve` Keep permissions/timestamps |
 | `remove` / `delete` | Delete files or directories. | `-r, --recursive` Delete contents<br>`-f, --force` No confirmation<br>`-i, --interactive` Confirm per file<br>`--trash` Move to system trash |
-| `search` | Find files by name or content. | `-r, --recursive` Include subdirs<br>`-n, --name` Match filename<br>`-c, --content` Search in file contents<br>`-i, --ignore-case` Case-insensitive |
-| `show` | Display files and directories. | `-a, --all` Show hidden files<br>`-l, --long` Detailed info<br>`-h, --human` Human-readable sizes<br>`-r, --recursive` Include subdirs<br>`-d, --depth <n>` Limit recursion depth<br>`--as` Format options **"list"**, **tree**, **graph**, **tiles**.<br>`--time` Show timestamps |
-| `storage` | Deduplicate, catalog, snapshot, organize, and prune files. | `--dedupe` Duplicates<br>`--catalog` Catalog<br>`--index` Index<br>`--snapshot` Snapshot<br>`--prune` Prune |
-| `summary` | Generate a structured summary of one or more files (text, logs, code, docs). | `-l, --lines <n>` Limit lines analyzed<br>`--auto` Auto-detect file type<br>`--keywords` Extract keywords<br>`--topics` Topic clustering<br>`--stats` File statistics (chars/lines/entropy)<br>`--fson` Output structured FSON summary |
-| `sync` | Synchronize files/directories. | `-r, --recursive` Include subdirs<br>`-u, --update` Copy only newer<br>`--delete` Remove extraneous files from target |
-| `system` | Inspect and modify system configuration. | `--info` System info<br>`--uptime` Show uptime<br>`--disk` Disk usage<br>`--memory` Memory usage<br>`--network` Network stats<br>`--shutdown` Shutdown system<br>`--reboot` Reboot system |
-| `watch` | Continuously monitor files or directories. | `-r, --recursive` Include subdirs<br>`-e, --events <list>` Filter events: create/modify/delete<br>`-t, --interval <n>` Poll interval in seconds |
-| `rewrite` | Modify or update file contents, timestamps, or size. | `-i` In-place edit<br>`--append` Append instead of overwrite<br>`-n` No newline<br>`--size <n>` Set exact file size |
+| `rename` | Rename files or directories. | `-f, --force` Overwrite target<br>`-i, --interactive` Confirm before overwrite |
+| `create` | Create new directories or files. | `-p, --parents` Create parent dirs<br>`-t, --type <file|dir>` Specify type |
+| `search` | Find files by name or content. | `-r, --recursive` Include subdirs<br>`-n, --name <pattern>` Match filename<br>`-c, --content <pattern>` Search in file contents<br>`-i, --ignore-case` Case-insensitive |
+| `archive` | Create, extract, or list archives. | `-c, --create` New archive<br>`-x, --extract` Extract contents<br>`-l, --list` List archive<br>`-f <format>` Format: zip/tar/gz<br>`-p, --password <pw>` Encrypt archive |
 | `view` | Output file contents to terminal. | `-n, --number` Number all lines<br>`-b, --non-blank` Number non-empty lines<br>`-s, --squeeze` Remove blank lines<br>`-h, --head <n>` First *n* lines<br>`-t, --tail <n>` Last *n* lines<br>`--time` Show timestamps |
+| `compare` | Compare two files/directories (text or binary). | `-t, --text` Line diff<br>`-b, --binary` Binary diff<br>`--context <n>` Show context lines<br>`--ignore-case` Ignore case differences |
+| `sync` | Synchronize files/directories. | `-r, --recursive` Include subdirs<br>`-u, --update` Copy only newer<br>`--delete` Remove extraneous files from target |
+| `watch` | Continuously monitor files or directories. | `-r, --recursive` Include subdirs<br>`-e, --events <list>` Filter events: create/modify/delete<br>`-t, --interval <n>` Poll interval in seconds |
+| `rewrite` | Modify or update file contents, timestamps, or size. | `-a, --append` Append instead of overwrite<br>`--in-place` Edit in place<br>`--access-time` Update access time<br>`--mod-time` Update mod time<br>`--size <n>` Set exact file size |
+| `introspect` | Examine file contents, type, or metadata. | `--head <n>` First n lines<br>`--tail <n>` Last n lines<br>`--count` Count lines/words/bytes<br>`--type` Show MIME/type<br>`--fson` FSON output |
+| `manage` | Manage user and group permissions. | `--user <name>` Specify user<br>`--group <name>` Specify group<br>`--add <perm>` Add permission<br>`--remove <perm>` Remove permission<br>`--list` List permissions<br>`--set <perm>` Set permissions explicitly |
+| `grammar` | Grammar analysis, correction, tone detection, and risk scanning (SOAP API). | `--check` Run grammar check<br>`--fix` Auto-correct<br>`--sanitize` Remove meme/rot-brain<br>`--suggest` Suggest alternatives<br>`--tone` Detect tone<br>`--detect <type>` Detector: ragebait, clickbait, spam, woke, bot, sarcasm, formal, snowflake, offensive, neutral, hype, quality, political, conspiracy, marketing, technobabble |
+| `summary` | Generate a structured summary of files (text, logs, code, docs). | `-l, --lines <n>` Limit lines<br>`--auto` Auto-detect file type<br>`--keywords` Extract keywords<br>`--topics` Topic clustering<br>`--stats` File statistics<br>`--fson` FSON summary |
+| `storage` | Manage disks and filesystems. | `--dedupe` Deduplicate<br>`--catalog` Catalog<br>`--index` Index<br>`--snapshot` Snapshot<br>`--prune` Prune |
+| `help` | Display help and examples. | `--examples` Usage examples<br>`--man` Full manual |
 
 ---
 
@@ -60,10 +57,12 @@ Shark Tool is the ultimate **all-in-one system and administration utility**. Des
 |-----------|-----------------|
 | `--help` | Show command help. |
 | `--version` | Display Shark Tool version. |
+| `--name` | Display the current user or session name. |
 | `-v, --verbose` | Enable detailed output. |
 | `-q, --quiet` | Suppress standard output. |
 | `--dry-run` | Simulate actions without changes. |
 | `--color` | Colorize output where applicable. |
+| `--clear` | Clear the terminal or output screen before running. |
 | `--time` | Display timestamps in output. |
 
 ---
