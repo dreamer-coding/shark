@@ -20,6 +20,7 @@ app_lib = static_library('app-code',
         'grammar.c',
         'rewrite.c',
         'storage.c',
+        'manage.c',
         'introspect.c',
         'summary.c'
     ),
