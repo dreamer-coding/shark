@@ -47,9 +47,6 @@ Shark Tool is the ultimate **all-in-one system and administration utility**. Des
 | `grammar` | Grammar analysis, correction, tone detection, and risk scanning (SOAP API). | `--check` Run grammar check<br>`--fix` Auto-correct<br>`--sanitize` Remove meme/rot-brain<br>`--suggest` Suggest alternatives<br>`--tone` Detect tone<br>`--detect <type>` Detector: ragebait, clickbait, spam, woke, bot, sarcasm, formal, snowflake, offensive, neutral, hype, quality, political, conspiracy, marketing, technobabble |
 | `summary` | Generate a structured summary of files (text, logs, code, docs). | `-l, --lines <n>` Limit lines<br>`--auto` Auto-detect file type<br>`--keywords` Extract keywords<br>`--topics` Topic clustering<br>`--stats` File statistics<br>`--fson` FSON summary |
 | `storage` | Manage disks and filesystems. | `--dedupe` Deduplicate<br>`--catalog` Catalog<br>`--index` Index<br>`--snapshot` Snapshot<br>`--prune` Prune |
-| `play` | Run classic text-based terminal games and simulations. | `--list` List available games<br>`--rules` Show game rules<br>`--seed <n>` Deterministic RNG<br>`--rounds <n>` Number of rounds<br>`--difficulty <easy|normal|hard>` Difficulty level<br>`--stats` Show game statistics<br>`--reset` Reset stats<br>`--ascii` Force ASCII output<br>`--no-color` Disable ANSI colors<br>`--fson` Structured results |
-| `system` | Inspect and manage system state and environment. | `--info` System summary<br>`--cpu` CPU details<br>`--mem` Memory usage<br>`--disk` Disk usage<br>`--net` Network status<br>`--env` Environment variables<br>`--uptime` System uptime<br>`--limits` Resource limits<br>`--processes` Running processes<br>`--health` Health checks<br>`--fson` Structured output |
-| `auto` | Define, run, and manage automation workflows. | `--list` List automations<br>`--run <name>` Execute automation<br>`--plan` Show execution plan<br>`--dry-run` Simulate automation<br>`--watch` Trigger on events<br>`--schedule <expr>` Schedule (cron-like)<br>`--policy <name>` Apply policy<br>`--retry <n>` Retry failures<br>`--timeout <n>` Execution timeout<br>`--parallel <n>` Parallel jobs<br>`--audit` Record execution<br>`--fson` Structured output |
 | `help` | Display help and examples. | `--examples` Usage examples<br>`--man` Full manual |
 
 ---
@@ -98,6 +95,34 @@ Shark Tool is the ultimate **all-in-one system and administration utility**. Des
 | `shark watch -r -e create,delete src/` | Monitor the `src/` directory recursively for file creation and deletion events. |
 | `shark rewrite -i --append log.txt "New entry"` | Append a new entry to a log file in-place. |
 | `shark view -n -h 20 --time notes.txt` | View the first 20 lines of a file with line numbers and timestamps. |
+
+## DevOps Workflow Compatibility
+
+| **DevOps Stage** | **Relevant Commands** | **Use Case / Notes** |
+|-----------------|--------------------|--------------------|
+| **Code & Content Management** | `show`, `search`, `view`, `rewrite`, `compare`, `introspect`, `grammar` | Inspect, analyze, edit, and validate code, logs, and documentation. Supports semantic search, linting, and risk detection. |
+| **Build & Artifact Management** | `archive`, `copy`, `move`, `rename`, `create`, `storage` | Package builds, manage file layouts, handle artifacts, snapshots, and deduplication. |
+| **Testing & QA** | `play`, `watch`, `compare`, `summary`, `grammar` | Run automated checks, simulate terminal interactions, track changes, produce structured summaries and content scoring. |
+| **Deployment & Sync** | `sync`, `move`, `copy`, `remove` | Deploy files across systems, synchronize directories, remove outdated content safely. |
+| **Monitoring & Observability** | `system`, `watch`, `introspect` | Inspect system health, track processes, monitor directories, generate metrics. |
+| **Automation & Orchestration** | `auto`, `system`, `play`, `sync` | Define workflows, schedule tasks, trigger automated reactions to events, audit execution, and coordinate multi-step operations. |
+| **Security & Compliance** | `manage`, `grammar`, `auto`, `search`, `rewrite` | Enforce permissions, scan content for risk, apply policies, redact sensitive data, and audit changes. |
+| **Documentation & Reporting** | `summary`, `view`, `introspect`, `grammar` | Generate structured reports, extract keywords/topics, produce human-readable or FSON output for auditing or dashboards. |
+| **Troubleshooting & Debugging** | `view`, `compare`, `search`, `watch`, `system`, `introspect` | Quickly locate errors, diff file changes, track runtime issues, inspect logs and system states, monitor in real-time. |
+
+## AI Ops Workflow Compatibility
+
+| **AI Ops Stage** | **Relevant Commands** | **Use Case / Notes** |
+|-----------------|--------------------|--------------------|
+| **Data Collection & Ingestion** | `search`, `view`, `introspect`, `sync` | Locate datasets, inspect formats, copy or synchronize files, extract structured content. Supports large-scale and semantic search. |
+| **Data Validation & Preprocessing** | `rewrite`, `grammar`, `introspect`, `summary` | Clean, normalize, and enrich data. Check grammar, sanitize text, summarize logs or datasets, validate schema or content types. |
+| **Model Training & Testing** | `play`, `compare`, `summary`, `watch` | Run simulations (`play`) for reinforcement learning or terminal-based tests, compare model outputs, track metrics, and monitor training artifacts. |
+| **Deployment & Orchestration** | `auto`, `sync`, `move`, `copy` | Deploy AI models and related assets, synchronize environments, orchestrate multi-step workflows, and ensure reproducible runs. |
+| **Monitoring & Observability** | `system`, `watch`, `introspect`, `summary` | Monitor system and model health, track logs, detect anomalies, measure performance, generate structured reports. |
+| **Alerting & Remediation** | `auto`, `play`, `system`, `manage` | Trigger automated workflows on threshold breaches or errors, run diagnostic games or tests, manage user/system permissions dynamically. |
+| **Compliance & Risk Management** | `grammar`, `search`, `introspect`, `auto` | Scan content for risk, enforce policies, audit workflow execution, redact sensitive data, and maintain traceable FSON outputs. |
+| **Reporting & Analytics** | `summary`, `view`, `introspect`, `storage` | Aggregate AI operations metrics, produce structured reports, index and catalog artifacts, and summarize logs and system states. |
+| **Feedback & Iteration** | `compare`, `play`, `grammar`, `summary` | Compare outputs against expected results, simulate scenarios, detect anomalies, and improve models or workflows iteratively. |
 
 ## **Prerequisites**
 
