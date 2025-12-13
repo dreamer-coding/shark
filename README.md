@@ -47,6 +47,7 @@ Shark Tool is the ultimate **all-in-one system and administration utility**. Des
 | `grammar` | Grammar analysis, correction, tone detection, and risk scanning (SOAP API). | `--check` Run grammar check<br>`--fix` Auto-correct<br>`--sanitize` Remove meme/rot-brain<br>`--suggest` Suggest alternatives<br>`--tone` Detect tone<br>`--detect <type>` Detector: ragebait, clickbait, spam, woke, bot, sarcasm, formal, snowflake, offensive, neutral, hype, quality, political, conspiracy, marketing, technobabble |
 | `summary` | Generate a structured summary of files (text, logs, code, docs). | `-l, --lines <n>` Limit lines<br>`--auto` Auto-detect file type<br>`--keywords` Extract keywords<br>`--topics` Topic clustering<br>`--stats` File statistics<br>`--fson` FSON summary |
 | `storage` | Manage disks and filesystems. | `--dedupe` Deduplicate<br>`--catalog` Catalog<br>`--index` Index<br>`--snapshot` Snapshot<br>`--prune` Prune |
+| `play` | Play classic text-based terminal games. | `--list` List available games<br>`--rules` Show game rules<br>`--seed <n>` Deterministic randomness<br>`--rounds <n>` Number of rounds<br>`--difficulty <easy|normal|hard>` Set difficulty<br>`--stats` Show win/loss stats<br>`--reset` Reset stored stats<br>`--ascii` Force ASCII output<br>`--no-color` Disable ANSI colors<br>`--fson` Structured results<br>`--sandbox` Disable filesystem/network |
 | `help` | Display help and examples. | `--examples` Usage examples<br>`--man` Full manual |
 
 ---
